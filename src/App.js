@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import'./App.css';
+import Pomodoro from './components/Pomodoro';
+import TodoList from './components/TodoList';
+import SettingsContext from './SettingsContext'
+import { useState } from 'react';
 
 function App() {
+
+  const [workMinutes, setWorkMinutes] = useState(25);
+  const [breakMinutes, setBreakMinutes] = useState(5);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <main>
+    <SettingsContext.Provider value={{
+      workMinutes,
+      breakMinutes,
+      setWorkMinutes,
+      setBreakMinutes
+    }}>
+
+      <div className="todo-app">
+            <Router>
+              <Routes>
+                <Route path="/" element={<TodoList />} />
+                <Route path="/Pomodoro" element={<Pomodoro />} />
+              </Routes>
+            </Router>
+      </div>
+
+    </SettingsContext.Provider>
+
+    
+  </main>
   );
 }
 
